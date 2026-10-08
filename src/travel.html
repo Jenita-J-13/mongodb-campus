@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Buddy Finder</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f6f8;
+        color: #333;
+        padding: 30px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 30px;
+        font-size: 32px;
+    }
+
+    h2 {
+        color: #2563eb;
+        margin-bottom: 30px;
+        font-size: 18px;
+    }
+
+    h3 {
+        color: #374151;
+        margin-bottom: 12px;
+    }
+
+    form,
+    .section,
+    .container {
+        background: white;
+        padding: 25px;
+        margin: 20px auto;
+        max-width: 900px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    label {
+        display: block;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #374151;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #d1d5db;
+        border-radius: 7px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 4px rgba(37, 99, 235, 0.25);
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 11px 18px;
+        border: none;
+        border-radius: 7px;
+        background: #2563eb;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+    }
+
+    th {
+        background: #2563eb;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 11px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover {
+        background: #f3f4f6;
+    }
+
+    .success {
+        margin-top: 15px;
+        padding: 12px;
+        background: #dcfce7;
+        color: #166534;
+        border-radius: 7px;
+        font-weight: bold;
+    }
+
+    .error {
+        margin-top: 15px;
+        padding: 12px;
+        background: #fee2e2;
+        color: #991b1b;
+        border-radius: 7px;
+        font-weight: bold;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: 1.6;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .delete-btn {
+        background: #dc2626;
+    }
+
+    .delete-btn:hover {
+        background: #b91c1c;
+    }
+
+    .update-btn {
+        background: #16a34a;
+    }
+
+    .update-btn:hover {
+        background: #15803d;
+    }
+
+    .search-btn {
+        background: #7c3aed;
+    }
+
+    .search-btn:hover {
+        background: #6d28d9;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 25px;
+        }
+
+        form,
+        .section,
+        .container {
+            padding: 18px;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+    <h1>Travel Buddy Finder</h1>
+
+
+    <!-- ==================== ADD TRAVEL BUDDY ==================== -->
+
+    <h2>Add Travel Buddy</h2>
+
+    <form id="travelForm">
+
+        <input
+            type="text"
+            id="buddyId"
+            placeholder="Buddy ID"
+            required
+        >
+        <br><br>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Name"
+            required
+        >
+        <br><br>
+
+        <input
+            type="text"
+            id="destination"
+            placeholder="Destination"
+            required
+        >
+        <br><br>
+
+        <input
+            type="number"
+            id="age"
+            placeholder="Age"
+            required
+        >
+        <br><br>
+
+        <input
+            type="number"
+            id="budget"
+            placeholder="Budget"
+            required
+        >
+        <br><br>
+
+        <input
+            type="text"
+            id="tripDuration"
+            placeholder="Trip Duration"
+            required
+        >
+        <br><br>
+
+        <input
+            type="text"
+            id="interests"
+            placeholder="Interests"
+            required
+        >
+        <br><br>
+
+        <input
+            type="text"
+            id="status"
+            placeholder="Status"
+            required
+        >
+        <br><br>
+
+        <button type="submit">
+            Add Travel Buddy
+        </button>
+
+    </form>
+
+    <p id="message"></p>
+
+
+    <hr>
+
+    <br><br>
+
+    <!-- ==================== VIEW ALL TRAVEL BUDDIES ==================== -->
+
+    <h2>View All Travel Buddies</h2>
+
+    <button onclick="getAllBuddies()">
+        View All Travel Buddies
+    </button>
+
+    <div id="result"></div>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== SEARCH TRAVEL BUDDY ==================== -->
+
+    <h2>Search Travel Buddy by ID</h2>
+
+    <input
+        type="text"
+        id="searchBuddyId"
+        placeholder="Enter Buddy ID"
+    >
+
+    <button onclick="searchBuddy()">
+        Search Buddy
+    </button>
+
+    <div id="searchResult"></div>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== DISPLAY SELECTED DETAILS ==================== -->
+
+    <h2>Display Selected Buddy Details</h2>
+
+    <input
+        type="text"
+        id="detailsBuddyId"
+        placeholder="Enter Buddy ID"
+    >
+
+    <button onclick="getBuddyDetails()">
+        Show Details
+    </button>
+
+    <div id="detailsResult"></div>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== UPDATE DESTINATION AND BUDGET ==================== -->
+
+    <h2>Update Travel Buddy</h2>
+
+    <input
+        type="text"
+        id="updateBuddyId"
+        placeholder="Buddy ID"
+    >
+    <br><br>
+
+    <input
+        type="text"
+        id="updateDestination"
+        placeholder="New Destination"
+    >
+    <br><br>
+
+    <input
+        type="number"
+        id="updateBudget"
+        placeholder="New Budget"
+    >
+    <br><br>
+
+    <button onclick="updateBuddy()">
+        Update Buddy
+    </button>
+
+    <p id="updateMessage"></p>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== INCREASE DESTINATION BUDGET ==================== -->
+
+    <h2>Increase Budget of Destination</h2>
+
+    <input
+        type="text"
+        id="increaseDestination"
+        placeholder="Destination"
+    >
+    <br><br>
+
+    <input
+        type="number"
+        id="increaseBudget"
+        placeholder="Budget to Increase"
+    >
+    <br><br>
+
+    <button onclick="increaseDestinationBudget()">
+        Increase Budget
+    </button>
+
+    <p id="increaseMessage"></p>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== SEARCH BY BUDGET RANGE ==================== -->
+
+    <h2>Search Travel Buddies by Budget Range</h2>
+
+    <input
+        type="number"
+        id="minBudget"
+        placeholder="Minimum Budget"
+    >
+    <br><br>
+
+    <input
+        type="number"
+        id="maxBudget"
+        placeholder="Maximum Budget"
+    >
+    <br><br>
+
+    <button onclick="searchByBudget()">
+        Search
+    </button>
+
+    <div id="rangeResult"></div>
+
+
+    <hr>
+
+    <br><br>
+
+
+    <!-- ==================== DELETE TRAVEL BUDDY ==================== -->
+
+    <h2>Delete Travel Buddy</h2>
+
+    <input
+        type="text"
+        id="deleteBuddyId"
+        placeholder="Buddy ID"
+    >
+
+    <button onclick="deleteBuddy()">
+        Delete Buddy
+    </button>
+
+    <p id="deleteMessage"></p>
+
+    <br><br>
+
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+
+    <script>
+
+
+        // ==================================================
+        // 1. ADD TRAVEL BUDDY
+        // ==================================================
+
+        document
+            .getElementById("travelForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+
+                const buddy = {
+
+                    buddyId:
+                        document.getElementById("buddyId").value,
+
+                    name:
+                        document.getElementById("name").value,
+
+                    destination:
+                        document.getElementById("destination").value,
+
+                    age:
+                        Number(
+                            document.getElementById("age").value
+                        ),
+
+                    budget:
+                        Number(
+                            document.getElementById("budget").value
+                        ),
+
+                    tripDuration:
+                        document.getElementById("tripDuration").value,
+
+                    interests:
+                        document.getElementById("interests").value,
+
+                    status:
+                        document.getElementById("status").value
+
+                };
+
+
+                const response =
+                    await fetch("/travel-buddies", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(buddy)
+
+                    });
+
+
+                const result =
+                    await response.text();
+
+
+                document.getElementById("message").innerText =
+                    result;
+
+
+                document
+                    .getElementById("travelForm")
+                    .reset();
+
+            });
+
+
+
+        // ==================================================
+        // 2. VIEW ALL TRAVEL BUDDIES
+        // ==================================================
+
+        async function getAllBuddies() {
+
+            const response =
+                await fetch("/travel-buddies");
+
+
+            const buddies =
+                await response.json();
+
+
+            let output =
+                "<h3>All Travel Buddies</h3>";
+
+
+            if (buddies.length === 0) {
+
+                output +=
+                    "<p>No travel buddies found.</p>";
+
+            }
+
+
+            buddies.forEach(buddy => {
+
+                output += `
+
+                    <p>
+
+                        Buddy ID: ${buddy.buddyId}
+                        <br>
+
+                        Name: ${buddy.name}
+                        <br>
+
+                        Destination: ${buddy.destination}
+                        <br>
+
+                        Age: ${buddy.age}
+                        <br>
+
+                        Budget: ${buddy.budget}
+                        <br>
+
+                        Trip Duration: ${buddy.tripDuration}
+                        <br>
+
+                        Interests: ${buddy.interests}
+                        <br>
+
+                        Status: ${buddy.status}
+
+                    </p>
+
+                    <hr>
+
+                `;
+
+            });
+
+
+            document.getElementById("result").innerHTML =
+                output;
+
+        }
+
+
+
+        // ==================================================
+        // 3. SEARCH TRAVEL BUDDY BY ID
+        // ==================================================
+
+        async function searchBuddy() {
+
+            const buddyId =
+                document.getElementById("searchBuddyId").value;
+
+
+            const response =
+                await fetch(`/travel-buddies/${buddyId}`);
+
+
+            if (!response.ok) {
+
+                document.getElementById("searchResult").innerHTML =
+                    "<p>Travel buddy not found.</p>";
+
+                return;
+
+            }
+
+
+            const buddy =
+                await response.json();
+
+
+            document.getElementById("searchResult").innerHTML = `
+
+                <h3>Travel Buddy Found</h3>
+
+                Buddy ID: ${buddy.buddyId}
+                <br>
+
+                Name: ${buddy.name}
+                <br>
+
+                Destination: ${buddy.destination}
+                <br>
+
+                Age: ${buddy.age}
+                <br>
+
+                Budget: ${buddy.budget}
+                <br>
+
+                Trip Duration: ${buddy.tripDuration}
+                <br>
+
+                Interests: ${buddy.interests}
+                <br>
+
+                Status: ${buddy.status}
+
+            `;
+
+        }
+
+
+
+        // ==================================================
+        // 4. DISPLAY ONLY SELECTED DETAILS
+        // ==================================================
+
+        async function getBuddyDetails() {
+
+            const buddyId =
+                document.getElementById("detailsBuddyId").value;
+
+
+            const response =
+                await fetch(
+                    `/travel-buddies/${buddyId}/details`
+                );
+
+
+            if (!response.ok) {
+
+                document.getElementById("detailsResult").innerHTML =
+                    "<p>Travel buddy not found.</p>";
+
+                return;
+
+            }
+
+
+            const buddy =
+                await response.json();
+
+
+            document.getElementById("detailsResult").innerHTML = `
+
+                <h3>Selected Travel Buddy Details</h3>
+
+                Name: ${buddy.name}
+                <br>
+
+                Destination: ${buddy.destination}
+                <br>
+
+                Budget: ${buddy.budget}
+                <br>
+
+                Trip Duration: ${buddy.tripDuration}
+
+            `;
+
+        }
+
+
+
+        // ==================================================
+        // 5. UPDATE DESTINATION AND BUDGET
+        // ==================================================
+
+        async function updateBuddy() {
+
+            const buddyId =
+                document.getElementById("updateBuddyId").value;
+
+
+            const destination =
+                document.getElementById("updateDestination").value;
+
+
+            const budget =
+                Number(
+                    document.getElementById("updateBudget").value
+                );
+
+
+            const response =
+                await fetch(
+                    `/travel-buddies/${buddyId}`,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            destination: destination,
+
+                            budget: budget
+
+                        })
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                document.getElementById("updateMessage").innerText =
+                    "Travel buddy not found or update failed.";
+
+                return;
+
+            }
+
+
+            const buddy =
+                await response.json();
+
+
+            document.getElementById("updateMessage").innerText =
+                `Updated successfully: ${buddy.name}`;
+
+        }
+
+
+
+        // ==================================================
+        // 6. INCREASE BUDGET OF A DESTINATION
+        // ==================================================
+
+        async function increaseDestinationBudget() {
+
+            const destination =
+                document.getElementById("increaseDestination").value;
+
+
+            const budget =
+                Number(
+                    document.getElementById("increaseBudget").value
+                );
+
+
+            const response =
+                await fetch(
+                    `/travel-buddies/destination/${encodeURIComponent(destination)}/increase`,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            budget: budget
+
+                        })
+
+                    }
+                );
+
+
+            const result =
+                await response.text();
+
+
+            document.getElementById("increaseMessage").innerText =
+                result;
+
+        }
+
+
+
+        // ==================================================
+        // 7. SEARCH BY BUDGET RANGE
+        // ==================================================
+
+        async function searchByBudget() {
+
+            const min =
+                Number(
+                    document.getElementById("minBudget").value
+                );
+
+
+            const max =
+                Number(
+                    document.getElementById("maxBudget").value
+                );
+
+
+            const response =
+                await fetch(
+                    `/travel-buddies/range/search?min=${min}&max=${max}`
+                );
+
+
+            const buddies =
+                await response.json();
+
+
+            let output =
+                "<h3>Travel Buddies in Budget Range</h3>";
+
+
+            if (buddies.length === 0) {
+
+                output +=
+                    "<p>No travel buddies found.</p>";
+
+            }
+
+
+            buddies.forEach(buddy => {
+
+                output += `
+
+                    <p>
+
+                        Name: ${buddy.name}
+                        <br>
+
+                        Destination: ${buddy.destination}
+                        <br>
+
+                        Budget: ${buddy.budget}
+                        <br>
+
+                        Trip Duration: ${buddy.tripDuration}
+
+                    </p>
+
+                    <hr>
+
+                `;
+
+            });
+
+
+            document.getElementById("rangeResult").innerHTML =
+                output;
+
+        }
+
+
+
+        // ==================================================
+        // 8. DELETE TRAVEL BUDDY
+        // ==================================================
+
+        async function deleteBuddy() {
+
+            const buddyId =
+                document.getElementById("deleteBuddyId").value;
+
+
+            const response =
+                await fetch(
+                    `/travel-buddies/${buddyId}`,
+                    {
+
+                        method: "DELETE"
+
+                    }
+                );
+
+
+            const result =
+                await response.text();
+
+
+            document.getElementById("deleteMessage").innerText =
+                result;
+
+        }
+
+    </script>
+
+</body>
+</html>
