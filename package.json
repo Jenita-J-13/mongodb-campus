@@ -4,7 +4,7 @@
   "description": "A simple Node.js application with Express",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node src/campus.js",
     "dev": "nodemon src/app.js"
   },
   "dependencies": {
