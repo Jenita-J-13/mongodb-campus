@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -9,9 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Open Campus Club application
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/campus.html");
+    res.sendFile(path.join(__dirname, "campus.html"));
 });
 
 // MongoDB Connection
